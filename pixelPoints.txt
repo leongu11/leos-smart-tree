@@ -1,0 +1,5 @@
+pixel1.jpeg,[137,361]
+pixel2.jpeg,[150,303]
+pixel3.jpeg,[177,258]
+pixel4.jpeg,[173,221]
+pixel5.jpeg,[193,184]
