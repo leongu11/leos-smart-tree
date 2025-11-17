@@ -81,7 +81,7 @@ savePath = "/home/pi/ledproject/pixelPoints.txt"
 
 with open(savePath, 'w') as file:
     for loop4 in pixelPoints:
-        entry = loop4+","+"["+str(pixelPoints[loop4][0])+","+str(pixelPoints[loop4][1])+"]\n"
+        entry = str(pixelPoints[loop4][0])+","+str(pixelPoints[loop4][1])+"\n"
         file.write(entry)
     file.close()
         
