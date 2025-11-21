@@ -49,7 +49,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#define LED_COUNT 5              // Number of LEDs in your strip
+#define LED_COUNT 50              // Number of LEDs in your strip
 #define GPIO_PIN 18               // Usually GPIO 18 (PWM0)
 #define DMA 10
 #define STRIP_TYPE WS2811_STRIP_RGB // For WS2811
@@ -84,7 +84,7 @@ ws2811_t ledstring =
 };
 
 int getInfo(int *avgX, int *avgY) {
-    FILE *fvar = fopen("pixelPoints.txt","r");
+    FILE *fvar = fopen("pixelPoints2.txt","r");
     if (fvar == NULL) {
 	//cuz stdio.h
 	printf("error -- file openings");
@@ -173,15 +173,39 @@ int main()
         
     size = sizeof(pixelArray[0]);
     count = sizeof(pixelArray)/size;
+    
     qsort(pixelArray, count, size, comparearrayXASC);
     
     for (int i = 0; i < LED_COUNT; i++) {
 	printf("%d, %d, %d\n", pixelArray[i].index, pixelArray[i].posX, pixelArray[i].posY);
     }
-        
     
-    //if (ws2811_init(&ledstring))
-        //return -1;
+    
+    
+    if (ws2811_init(&ledstring))
+        return -1;
+    
+    for (int i = 0; i < LED_COUNT; i++) {
+	ledstring.channel[0].leds[pixelArray[i].index] = 0x00FF00;
+	ws2811_render(&ledstring);
+	usleep(500000);
+	ledstring.channel[0].leds[pixelArray[i].index] = 0x000000;
+	ws2811_render(&ledstring);
+	
+    }
+
+    qsort(pixelArray, count, size, comparearrayXDSC);
+    
+    for (int i = 1; i < LED_COUNT; i++) {
+	ledstring.channel[0].leds[pixelArray[i].index] = 0x00FF00;
+	ws2811_render(&ledstring);
+	usleep(500000);
+	ledstring.channel[0].leds[pixelArray[i].index] = 0x000000;
+	ws2811_render(&ledstring);
+	
+    }	
+
+    
     //while (flag = true) {
 	////for (int i = 0; i < LED_COUNT; i++) {
 	    ////ledstring.channel[0].leds[i] = 0x00FF00;

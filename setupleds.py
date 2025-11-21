@@ -8,20 +8,20 @@ import subprocess
 
 #use for first process through only
 
-numPix = 5
+numPix = 50
 
-##
-##pixels = neopixel.NeoPixel(board.D18,numPix,brightness = 1,auto_write = True)
-##
-##def cameraRun():
-##        
-##    for loop in range(1,numPix+1):
-##        pixels[loop-1] = (255,0,0)
-##        subprocess.run(["fswebcam","-r","640x480","--no-banner","pixel"+str(loop)+".jpeg"])
-##        time.sleep(3)
-##        pixels[loop-1] = (0,0,0)
-##
-##cameraRun()
+
+pixels = neopixel.NeoPixel(board.D18,numPix,brightness = 1,auto_write = True)
+
+def cameraRun():
+        
+    for loop in range(1,numPix+1):
+        pixels[loop-1] = (255,0,0)
+        subprocess.run(["fswebcam","-r","640x480","--no-banner","pixel"+str(loop)+".jpeg"])
+        time.sleep(1)
+        pixels[loop-1] = (0,0,0)
+
+cameraRun()
 
 ##later
 
@@ -51,6 +51,7 @@ def loadImages():
         sumX = 0
         sumY = 0
         for (x,y) in points:
+
             sumX+=x
             sumY+=y
             
