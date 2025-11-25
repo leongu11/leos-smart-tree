@@ -84,7 +84,7 @@ ws2811_t ledstring =
 };
 
 int getInfo(int *avgX, int *avgY) {
-    FILE *fvar = fopen("pixelPoints2.txt","r");
+    FILE *fvar = fopen("pixelPoints.txt","r");
     if (fvar == NULL) {
 	//cuz stdio.h
 	printf("error -- file openings");
@@ -106,8 +106,8 @@ int getInfo(int *avgX, int *avgY) {
     fclose(fvar);
     return 0;
     
-}
-
+} 
+ 
 struct array_struct {
     int index;
     int posX;
@@ -154,6 +154,39 @@ int comparearrayYDSC(const void *const tuple1, const void *const tuple2) {
     return s2->posY - s1->posY;
 }
 
+
+void shift(int op, struct array_struct *pixelArray, int count, int size, int color, int mcS) 
+{
+    switch (op) {
+	case 1:
+	    qsort(pixelArray, count, size, comparearrayYASC);
+	    break;
+ 	case 2:
+	    qsort(pixelArray, count, size, comparearrayYDSC);
+	    break;
+	case 3:
+	    qsort(pixelArray, count, size, comparearrayXASC);
+	    break;
+	case 4:
+	    qsort(pixelArray, count, size, comparearrayXDSC);
+	    break;
+	}
+   
+    for (int i = 0; i < LED_COUNT; i++) {
+	ledstring.channel[0].leds[pixelArray[i].index] = color;
+	ws2811_render(&ledstring);
+			
+	usleep(mcS);
+	ledstring.channel[0].leds[pixelArray[i].index] = 0x000000;
+	ws2811_render(&ledstring);
+	
+    }
+
+}   
+
+//void section()
+
+
 int main()
 {
     int avgX[LED_COUNT];
@@ -174,37 +207,14 @@ int main()
     size = sizeof(pixelArray[0]);
     count = sizeof(pixelArray)/size;
     
-    qsort(pixelArray, count, size, comparearrayXASC);
-    
-    for (int i = 0; i < LED_COUNT; i++) {
-	printf("%d, %d, %d\n", pixelArray[i].index, pixelArray[i].posX, pixelArray[i].posY);
-    }
-    
-    
+        
     
     if (ws2811_init(&ledstring))
         return -1;
-    
-    for (int i = 0; i < LED_COUNT; i++) {
-	ledstring.channel[0].leds[pixelArray[i].index] = 0x00FF00;
-	ws2811_render(&ledstring);
-	usleep(500000);
-	ledstring.channel[0].leds[pixelArray[i].index] = 0x000000;
-	ws2811_render(&ledstring);
-	
+    while (1) {
+	shift(1,pixelArray,count,size,0x00FF00,1000);
+	shift(4,pixelArray,count,size,0xFF0000,1000);
     }
-
-    qsort(pixelArray, count, size, comparearrayXDSC);
-    
-    for (int i = 1; i < LED_COUNT; i++) {
-	ledstring.channel[0].leds[pixelArray[i].index] = 0x00FF00;
-	ws2811_render(&ledstring);
-	usleep(500000);
-	ledstring.channel[0].leds[pixelArray[i].index] = 0x000000;
-	ws2811_render(&ledstring);
-	
-    }	
-
     
     //while (flag = true) {
 	////for (int i = 0; i < LED_COUNT; i++) {
