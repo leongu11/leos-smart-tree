@@ -44,9 +44,18 @@ Some Goals I had for the project:
 ### References
 - link repo ws2811 here
 
-
 ## Features
 
-## Hardware / Supplies
+There are a few features that the tree can perform with the hashmaps. They are all functions with certain perameters, like the color, speed, etc, dependant on the feature itself: 
+- Shift; the lights are turned on one by one in the order that is given as the argument (ASC/DESC) and can go either horizontally or vertically.
+- Grouping; takes the two extremes of the x's/y's, finds the length/coordinates between and partitions them by the amount of sections given (also an argument) the colors shift from section to section, creating a cascading effect, horizontal and vertical.
+- BAMS; all lights turn on at once with different color, creates 'explosion' of lights, used to exaggerate high intensity moments or accented notes. 
 
 ## Setup
+
+## Timeline
+Future plans for this project:
+
+- project images / names on the tree
+- UI for users to interact with the tree
+
