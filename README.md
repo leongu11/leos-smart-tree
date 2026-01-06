@@ -42,7 +42,9 @@ Some Goals I had for the project:
 - VNC Viewer (for easier development)
   
 ### References
-- link repo ws2811 here
+ws281x library for lights: 
+
+https://github.com/jgarff/rpi_ws281x
 
 ## Features
 
@@ -53,9 +55,25 @@ There are a few features that the tree can perform with the hashmaps. They are a
 
 ## Setup
 
+- weld lights (150 LEDs) to power source; connect the LED string to raspberry pi on GPIO pins
+- clone rpi_ws281x repo
+- use neopixel or other module to control lights
+- setup webcam so all the LEDs are in the frame and run the python file (DO NOT DISRUPT THE CAMERA)
+- run C code and delete the frames if successful
+  
 ## Timeline
 Future plans for this project:
 
 - project images / names on the tree
 - UI for users to interact with the tree
+
+## Videos
+
+https://github.com/user-attachments/assets/1f78b99b-5984-4
+
+https://github.com/user-attachments/assets/e393610a-568f-4166-b22d-e1a2584f9fee
+
+https://github.com/user-attachments/assets/14f0eeb3-5642-4a83-b658-a411da98b0bd
+
+
 
